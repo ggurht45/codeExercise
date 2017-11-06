@@ -2,6 +2,9 @@ package scratch;
 
 public class SystemOne implements AQSystem {
 
+//    private Map<String, >
+
+
     @Override
     public boolean boot() {
         System.out.println("boot method implementation");
