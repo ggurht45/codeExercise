@@ -1,12 +1,12 @@
 package scratch;
 
-public enum AC_Type {
-    PASSENGER(0),
-    CARGO(1);
+public enum AC_Size {
+    LARGE(0),
+    SMALL(1);
 
     private int priority;
 
-    AC_Type(int priority) {
+    AC_Size(int priority) {
         this.priority = priority;
     }
 
@@ -14,10 +14,9 @@ public enum AC_Type {
         return priority;
     }
 
-
     @Override
     public String toString() {
-        return "AC_Type{" +
+        return "AC_Size{" +
                 "priority=" + priority +
                 '}';
     }
