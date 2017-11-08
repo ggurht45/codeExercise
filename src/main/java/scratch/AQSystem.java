@@ -2,10 +2,12 @@ package scratch;
 
 public interface AQSystem {
 
-    boolean boot();
+    void boot();
 
-    void enqueueAC();
+    void enqueueAC(AC aircraft);
 
-    void dequeueAC();
+    AC dequeueAC();
+
+    String getCurrentQueueState();
 
 }

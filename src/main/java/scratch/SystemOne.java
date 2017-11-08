@@ -5,21 +5,26 @@ public class SystemOne implements AQSystem {
     private Planes planes;
 
     @Override
-    public boolean boot() {
-        System.out.println("boot method implementation");
+    public void boot() {
         planes = new Planes();
-        return false;
     }
 
     @Override
-    public void enqueueAC() {
-        System.out.println("enqueueAC method implementation");
-//        planes.addPlane();
+    public void enqueueAC(AC aircraft) {
+        System.out.println("new aircraft queued: " + aircraft);
+        planes.addPlane(aircraft);
     }
 
     @Override
-    public void dequeueAC() {
-        System.out.println("dequeueAC method implementation");
+    public AC dequeueAC() {
+        AC aircraft = planes.removePlane();
+        System.out.println("plane dequeued: " + aircraft);
+        return null;
+    }
+
+    @Override
+    public String getCurrentQueueState() {
+        return planes.planesQueueState();
     }
 
 

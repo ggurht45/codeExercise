@@ -25,6 +25,15 @@ public class AC {
     public void setSize(AC_Size size) {
         this.size = size;
     }
+
+
+    @Override
+    public String toString() {
+        return "AC{" +
+                "type=" + type +
+                ", size=" + size +
+                '}';
+    }
 }
 
 

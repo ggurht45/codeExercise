@@ -1,9 +1,6 @@
 package scratch;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ConcurrentMap;
@@ -15,30 +12,40 @@ public class Planes {
     //buckets of queues to store planes
     private ConcurrentMap<Integer, ConcurrentLinkedQueue<AC>> planeBuckets = new ConcurrentHashMap<>();
 
-    //ids in order of precedence
-    private ArrayList<Integer> idsInOrder;
+    //ids in order of precedence; keyset order will not change
+    private Map<Integer, String> idsBucketNamesMap = new LinkedHashMap<>();
 
     //initialize buckets to contain empty queues for planes
     public Planes() {
-        System.out.println("initializing plane q's...");
-        Set<Integer> ids = getBucketIds();
-        for (int id : ids) {
+        //mappings from ids to name of buckets
+        initializeIdMap();
+
+        //initialize empty queues
+        for (int id : idsBucketNamesMap.keySet()) {
             planeBuckets.put(id, new ConcurrentLinkedQueue<>());
         }
     }
 
+    //show current number of planes in different buckets
+    public String planesQueueState() {
+        StringBuffer sBuffer = new StringBuffer("Plane Queues:\n");
+        for (int id : idsBucketNamesMap.keySet()) {
+            sBuffer.append(idsBucketNamesMap.get(id)+ ":\n\t" + planeBuckets.get(id) + "\n");
+        }
+        return sBuffer.toString();
+    }
+
+
     //for every combination of type and size of plane a unique hashcode id is computed.
-    private Set<Integer> getBucketIds() {
-        Set<Integer> set = new HashSet<>();
+    private void initializeIdMap() {
         //create ids
         for (AC_Type t : AC_Type.values()) {
             for (AC_Size s : AC_Size.values()) {
                 int id = getPlaneBucketId(t, s);
-                set.add(id);
-                idsInOrder.add(id);
+                String bucketName = t.toString() + "+" + s.toString();
+                idsBucketNamesMap.put(id, bucketName);
             }
         }
-        return set;
     }
 
     //helper method to get the id of the bucket in which the plane is stored.
@@ -60,7 +67,7 @@ public class Planes {
     //remove highest priority plane
     public AC removePlane() {
         //will go through passenger+large plane ids first, then passenger+small, cargo+large, cargo+small
-        for (int id : idsInOrder) {
+        for (int id : idsBucketNamesMap.keySet()) {
             if (planeBuckets.get(id).peek() != null) {
                 return planeBuckets.get(id).poll();
             }
