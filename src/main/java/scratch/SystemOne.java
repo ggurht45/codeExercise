@@ -9,6 +9,7 @@ public class SystemOne implements AQSystem {
         planes = new Planes();
     }
 
+
     @Override
     public void enqueueAC(AC aircraft) {
         System.out.println("new aircraft queued: " + aircraft);
@@ -19,7 +20,7 @@ public class SystemOne implements AQSystem {
     public AC dequeueAC() {
         AC aircraft = planes.removePlane();
         System.out.println("plane dequeued: " + aircraft);
-        return null;
+        return aircraft;
     }
 
     @Override

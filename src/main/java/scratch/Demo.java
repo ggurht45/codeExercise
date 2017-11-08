@@ -3,9 +3,13 @@ package scratch;
 
 public class Demo {
 
+    void aqmRequestProcess(aqmRequest r){
+        //process request.
+        //http request. url, rest api, and json data for
+    }
+
     //create system one object, run three methods on it
     public static void main(String[] args){
-
         SystemOne sysOne = new SystemOne();
         sysOne.boot();
 
