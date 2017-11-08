@@ -1,4 +1,4 @@
-package scratch;
+package exercise;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

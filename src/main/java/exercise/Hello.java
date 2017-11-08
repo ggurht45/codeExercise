@@ -1,4 +1,4 @@
-package scratch;
+package exercise;
 
 public class Hello {
 

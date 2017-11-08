@@ -1,4 +1,4 @@
-package scratch;
+package exercise;
 enum REQUEST_TYPE{
     BOOT,ENQUEUE,DEQUEUE, QUEUE_STATE;
 }
