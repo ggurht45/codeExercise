@@ -5,7 +5,7 @@ public class Demo {
     static SystemOne sysOne = new SystemOne();
 
     //process different requests
-    static AC aqmRequestProcess(aqmRequest r){
+    static void aqmRequestProcess(aqmRequest r){
         switch (r.getRequest_type()){
             case BOOT:
                 sysOne.boot();
@@ -14,12 +14,12 @@ public class Demo {
                 sysOne.enqueueAC(r.getAcDataObj());
                 break;
             case DEQUEUE:
-                return sysOne.dequeueAC();
+                sysOne.dequeueAC();
+                break;
             case QUEUE_STATE:
-                sysOne.queueState();
+                System.out.println(sysOne.queueState());
                 break;
         }
-        return null;
     }
 
     //create system one object, run three methods on it
@@ -45,10 +45,14 @@ public class Demo {
 
 
         //should remove automatically remove in order of precedence
-        aqmRequest d1 = new aqmRequest(REQUEST_TYPE.DEQUEUE,null);
-        aqmRequestProcess(d1);
-        aqmRequest s1 = new aqmRequest(REQUEST_TYPE.QUEUE_STATE,null);
-        aqmRequestProcess(s1);
+        aqmRequestProcess(new aqmRequest(REQUEST_TYPE.DEQUEUE,null));
+        aqmRequestProcess(new aqmRequest(REQUEST_TYPE.QUEUE_STATE,null));
+        aqmRequestProcess(new aqmRequest(REQUEST_TYPE.DEQUEUE,null));
+        aqmRequestProcess(new aqmRequest(REQUEST_TYPE.QUEUE_STATE,null));
+        aqmRequestProcess(new aqmRequest(REQUEST_TYPE.DEQUEUE,null));
+        aqmRequestProcess(new aqmRequest(REQUEST_TYPE.QUEUE_STATE,null));
+        aqmRequestProcess(new aqmRequest(REQUEST_TYPE.DEQUEUE,null));
+        aqmRequestProcess(new aqmRequest(REQUEST_TYPE.QUEUE_STATE,null));
 
 
     }
