@@ -8,6 +8,6 @@ public interface AQSystem {
 
     AC dequeueAC();
 
-    String getCurrentQueueState();
+    String queueState();
 
 }

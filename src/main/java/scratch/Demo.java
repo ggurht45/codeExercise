@@ -2,34 +2,54 @@ package scratch;
 
 
 public class Demo {
+    static SystemOne sysOne = new SystemOne();
 
-    void aqmRequestProcess(aqmRequest r){
-        //process request.
-        //http request. url, rest api, and json data for
+    //process different requests
+    static AC aqmRequestProcess(aqmRequest r){
+        switch (r.getRequest_type()){
+            case BOOT:
+                sysOne.boot();
+                break;
+            case ENQUEUE:
+                sysOne.enqueueAC(r.getAcDataObj());
+                break;
+            case DEQUEUE:
+                return sysOne.dequeueAC();
+            case QUEUE_STATE:
+                sysOne.queueState();
+                break;
+        }
+        return null;
     }
 
     //create system one object, run three methods on it
     public static void main(String[] args){
-        SystemOne sysOne = new SystemOne();
-        sysOne.boot();
+        aqmRequest br = new aqmRequest(REQUEST_TYPE.BOOT, null);
+        aqmRequestProcess(br);
 
         //4 different types of combinations possible.
-        AC a1 = new AC(AC_Type.PASSENGER, AC_Size.LARGE);
-        AC a2 = new AC(AC_Type.PASSENGER, AC_Size.SMALL);
-        AC a3 = new AC(AC_Type.CARGO, AC_Size.LARGE);
-        AC a4 = new AC(AC_Type.CARGO, AC_Size.SMALL);
-        AC a5 = new AC(AC_Type.PASSENGER, AC_Size.LARGE);
+        aqmRequest a1 = new aqmRequest(REQUEST_TYPE.ENQUEUE, new AC(AC_Type.PASSENGER, AC_Size.LARGE));
+        aqmRequestProcess(a1);
 
-        sysOne.enqueueAC(a1);
-        sysOne.enqueueAC(a2);
-        sysOne.enqueueAC(a3);
-        sysOne.enqueueAC(a4);
-        sysOne.enqueueAC(a5);
-        System.out.println(sysOne.getCurrentQueueState());
+        aqmRequest a2 = new aqmRequest(REQUEST_TYPE.ENQUEUE, new AC(AC_Type.PASSENGER, AC_Size.SMALL));
+        aqmRequestProcess(a2);
+
+        aqmRequest a3 = new aqmRequest(REQUEST_TYPE.ENQUEUE, new AC(AC_Type.CARGO, AC_Size.LARGE));
+        aqmRequestProcess(a3);
+
+        aqmRequest a4 = new aqmRequest(REQUEST_TYPE.ENQUEUE, new AC(AC_Type.CARGO, AC_Size.SMALL));
+        aqmRequestProcess(a4);
+
+        aqmRequest a5 = new aqmRequest(REQUEST_TYPE.ENQUEUE, new AC(AC_Type.PASSENGER, AC_Size.LARGE));
+        aqmRequestProcess(a5);
+
 
         //should remove automatically remove in order of precedence
-        sysOne.dequeueAC();
-        System.out.println(sysOne.getCurrentQueueState());
+        aqmRequest d1 = new aqmRequest(REQUEST_TYPE.DEQUEUE,null);
+        aqmRequestProcess(d1);
+        aqmRequest s1 = new aqmRequest(REQUEST_TYPE.QUEUE_STATE,null);
+        aqmRequestProcess(s1);
+
 
     }
 

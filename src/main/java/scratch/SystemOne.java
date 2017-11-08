@@ -24,7 +24,7 @@ public class SystemOne implements AQSystem {
     }
 
     @Override
-    public String getCurrentQueueState() {
+    public String queueState() {
         return planes.planesQueueState();
     }
 
